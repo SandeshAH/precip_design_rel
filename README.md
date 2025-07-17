@@ -73,6 +73,9 @@ Below are sample results of the function $U_r$ generated using various different
 ![Comparison with Real Data](assets/ann_vs_gru_fbsde_smooth.png)
 *Figure 5: Comparison between the generated $U_r$ via above different methods.*
 
+
+For more details, see the [arXiv preprint](https://arxiv.org/abs/2507.08891).
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -83,11 +86,12 @@ If you use this work in your research, please cite:
 
 ```
 @article{precip_design_2025,
-    title={Mathematical modeling of a pH Swing Precipitation Process and its Optimal Design},
-    author={Sandesh Athni Hiremath, Chinmay Hegde and Andreas Voigt},
-    journal={arXiv preprint arXiv:XXXX.XXXXX},
-    year={2025}
+    title={Mathematical Modeling of a pH Swing Precipitation Process and its Optimal Design}, 
+    author={Sandesh Athni Hiremath and Chinmay Hegde and Andreas Voigt},
+    year={2025},
+    eprint={2507.08891},
+    archivePrefix={arXiv},
+    primaryClass={math.OC},
+    url={https://arxiv.org/abs/2507.08891}, 
 }
 ```
-
-For more details, see the [arXiv preprint](https://arxiv.org/abs/XXXX.XXXXX).
