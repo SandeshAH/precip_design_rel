@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
     echo "Failed to activate conda environment"
     exit 1
 fi
-echo "Activated conda environment precip"
+echo "Entered precip conda environment..."
 
 # Check if arguments are passed
 if [ $# -eq 1 ]; then

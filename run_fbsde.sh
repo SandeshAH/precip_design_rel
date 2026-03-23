@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
     echo "Failed to activate conda environment"
     exit 1
 fi
-echo "Activated conda environment base"
+echo "Entered precip conda environment..."
 
 # Check if arguments are passed
 if [ $# -eq 1 ]; then
@@ -64,17 +64,17 @@ fi
 
 # Run the Python script as parallel processes
 echo "Running FBSDE algorithm in parallel..."
-python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde1.out 2>&1 & #) >> ../fbsde1.out 2>&1
 pid1=$!
 echo "Started FBSDE process 1 with PID $pid1"
 # Run the Python script with different parameters
-python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg >> ../fbsde.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg > ../fbsde2.out 2>&1 & #) >> ../fbsde2.out 2>&1
 pid2=$!
 echo "Started FBSDE process 2 with PID $pid2"
-python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg >> ../fbsde.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg > ../fbsde3.out 2>&1 & #) >> ../fbsde3.out 2>&1
 pid3=$!
 echo "Started FBSDE process 3 with PID $pid3"
-python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg >> ../fbsde.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg > ../fbsde4.out 2>&1 & #) >> ../fbsde4.out 2>&1
 pid4=$!
 echo "Started FBSDE process 4 with PID $pid4"
 
@@ -92,13 +92,13 @@ echo "All FBSDE processes completed."
 
 # Plot the results
 echo "Plotting results..."
-python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde.out 2>&1 &
+(time python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde1.out 2>&1 &) >> ../fbsde1.out 2>&1 &
 pid1=$!
-python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde.out 2>&1 &
+(time python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde2.out 2>&1 &) >> ../fbsde2.out 2>&1 &
 pid2=$!
-python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde.out 2>&1 &
+(time python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde3.out 2>&1 &) >> ../fbsde3.out 2>&1 &
 pid3=$!
-python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde.out 2>&1 &
+(time python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde4.out 2>&1 &) >> ../fbsde4.out 2>&1 &
 pid4=$!
 
 echo "Waiting for plots to be complete..."

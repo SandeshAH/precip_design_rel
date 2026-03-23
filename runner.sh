@@ -42,7 +42,7 @@ if [ $? -ne 0 ]; then
     echo "Failed to activate conda environment"
     exit 1
 fi
-echo "Activated conda environment precip"
+echo "Entered precip conda environment..."
 
 # Check if arguments are passed
 if [ $# -eq 1 ]; then
@@ -80,17 +80,17 @@ echo "DNN processes started successfully"
 
 # Run the Python script as parallel processes
 echo "Running FBSDE algorithm in parallel..."
-(time python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde1.out 2>&1 &) >> ../fbsde1.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde1.out 2>&1 & #) >> ../fbsde1.out 2>&1
 pid2=$!
 echo "Started FBSDE process 1 with PID $pid1"
 # Run the Python script with different parameters
-(time python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg >> ../fbsde2.out 2>&1 &) >> ../fbsde2.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg > ../fbsde2.out 2>&1 & #) >> ../fbsde2.out 2>&1
 pid3=$!
 echo "Started FBSDE process 2 with PID $pid2"
-(time python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg >> ../fbsde3.out 2>&1 &) >> ../fbsde3.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg > ../fbsde3.out 2>&1 & #) >> ../fbsde3.out 2>&1
 pid4=$!
 echo "Started FBSDE process 3 with PID $pid3"
-(time python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg >> ../fbsde4.out 2>&1 &) >> ../fbsde4.out 2>&1 &
+time python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg > ../fbsde4.out 2>&1 & #) >> ../fbsde4.out 2>&1
 pid5=$!
 echo "Started FBSDE process 4 with PID $pid4"
 
