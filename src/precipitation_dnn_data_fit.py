@@ -569,7 +569,8 @@ def plot_states(res, GRU):
     plt.plot(time[::h,s:e].mean(axis=1).flatten()[::h]/60, .1*par_vec[::h,s:e,0].mean(dim=1).flatten().cpu().numpy()[::h],'b-',lw=2, label=f'$0.1 U^{{{sup}}}_{{\\rm H}}$')
     plt.plot(time[::h,s:e].mean(axis=1).flatten()[::h]/60, (ur).mean(dim=1).flatten().cpu().numpy()[::h],'g-',lw=3,label=f'$10 U^{sup}_r$')
     plt.plot(time[::h,s:e].mean(axis=1).flatten()[::h]/60, 0*par_vec[::h,s:e,1].mean(dim=1).flatten().cpu().numpy()[::h],'k--',alpha=.5,lw=5,); 
-    plt.ylim([-.005, min(.01,10*ur.flatten().cpu().numpy().max())])
+    ymin = -0.005 if GRU else -0.01
+    plt.ylim([ymin, min(.01,10*ur.flatten().cpu().numpy().max())])
     
     plt.xlabel('Time $t~(\\rm min)$'); plt.ylabel(f"$\\bf U_H, U_r$", labelpad=-5); plt.title("Rate modulation function")
     plt.grid(True)
@@ -910,7 +911,7 @@ def smoothen_compare_with_fbsde(ann_outs, gru_outs):
         suf = "" #if i < 2 else ""
         axs[i].set_title(f"Rate modulation function for Exp-{i+1}{suf}"); 
         #axs[i].set_ylim([max(min(umin,fumin),-0.01), min(max(umax,fumax),.01)])
-        axs[i].set_ylim([-0.0025, 0.0075])
+        axs[i].set_ylim([-0.0015, 0.0015])
         axs[i].grid(True)
         if i == 0:
             axs[i].legend(ncol=2, loc='upper center', bbox_to_anchor=(1.1, -0.08), framealpha=1, edgecolor="gray", fancybox=True, frameon=True, facecolor='lavender')
@@ -946,7 +947,7 @@ def compare_with_fbsde(ann_outs, gru_outs):
         axs[i].set_xlabel('Time $t~(\\rm min)$'); #axs[i].set_ylabel("${\\bf U_r}$"); 
         axs[i].set_title(f"Rate modulation function for Exp-{i+1}"); 
         #axs[i].set_ylim([max(min(umin,fumin),-0.01), min(max(umax,fumax),.01)])
-        axs[i].set_ylim([-0.0025, 0.0075])
+        axs[i].set_ylim([-0.0015, 0.0015])
         axs[i].grid(True)
         if i == 0:
             axs[i].legend(ncol=2, loc='upper center', bbox_to_anchor=(1.1, -0.08), framealpha=1, edgecolor="gray", fancybox=True, frameon=True, facecolor='lavender')

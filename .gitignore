@@ -1,6 +1,6 @@
-data
 models
 __pycache__
+results/precip_design_v2
 results/precip_design/data
 results/precip_design/weights
 *.out
