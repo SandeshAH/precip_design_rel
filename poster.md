@@ -22,7 +22,7 @@ This document presents the results of the work:
 
 ## Overview
 
-The following sections display figures in the order they appear in the main.tex paper, grouped by methodology and purpose. These figures demonstrate the mathematical modeling and optimal design of a pH swing precipitation process.
+The following sections display figures in the order they appear in the associated manuscript, grouped by methodology and purpose. These figures demonstrate the mathematical modeling and optimal design of a pH swing precipitation process.
 
 ---
 
@@ -34,7 +34,7 @@ The following sections display figures in the order they appear in the main.tex 
 <td><img src="results/precip_design/figures/simplified_CO32_function.png" width="400"><br>Simplified CO3^2- Function</td>
 </tr></table>
 
-**Figure 1:** Comparison between original C_sat, CO3^2- functions and their simplified versions. Here blue stared curve shows the original functions as described in the equations, while the orange curve shows the respective simplified versions.
+**Figure 1:** Comparison between original C_sat, CO3^2- functions and their simplified versions. Here blue stared curve shows the original functions as described in the equations, while the orange curve shows the respective simplified versions. The right subplot of each figure shows the normalized error between the original and the simplified functions.
 
 ---
 
@@ -133,7 +133,7 @@ The following sections display figures in the order they appear in the main.tex 
 <td><img src="results/precip_design/figures/ann_vs_gru_fbsde_smooth_exp4.png" width="400"><br>Comparison Exp 4</td>
 </tr></table>
 
-**Figure 9:** Comparison of predicted design function U_r by four different methods namely- manual, FBSSM, ANN and GRUN for experiment data 1 (top figure) and 4 (bottom figure). The GRUN model generates a smoother signal compared to the others, with less fluctuations and lower magnitude of min and max values.
+**Figure 9:** Comparison of predicted design function U_r by four different methods namely- manual, FBSSM, ANN and GRUN for experiment data 1 (top figure) and 4 (bottom figure). The GRUN model generates a smoother signal compared to the others, with fewer fluctuations and lower magnitude of min and max values.
 
 ---
 
