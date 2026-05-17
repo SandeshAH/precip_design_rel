@@ -22,25 +22,25 @@ echo "Changed directory to src"
 # Activate python environment
 # If the conda environment is not activated, activate it
 current_env=$(conda info --envs | grep '*' | awk '{print $1}')
-if [ "$current_env" != "base" ]; then
-    echo "Current conda environment is not 'base'."
+if [ "$current_env" != "precip" ]; then
+    echo "Current conda environment is not 'precip'."
     echo "Current environment: $current_env"
     # If not, activate it
-    source activate base
+    source activate precip
     if [ $? -ne 0 ]; then
         echo "Failed to activate conda environment"
         exit 1
     fi
-    echo "Activated conda environment base"
+    echo "Activated conda environment precip"
 else
-    echo "Current conda environment is 'base'."
+    echo "Current conda environment is 'precip'."
 fi
 
 if [ $? -ne 0 ]; then
     echo "Failed to activate conda environment"
     exit 1
 fi
-echo "Entered precip conda environment..."
+echo "Activated conda environment precip"
 
 # Check if arguments are passed
 if [ $# -eq 1 ]; then
@@ -50,10 +50,10 @@ if [ $# -eq 1 ]; then
         arg="--cont"
     elif [ "$arg" == "-p" ]; then
         echo "Continuing with plotting..."
-        python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde.out 
-        python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde.out 
-        python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde.out 
-        python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde.out 
+        python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde1.out 
+        python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde2.out 
+        python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde3.out 
+        python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde4.out 
         echo "Plotting completed"
         exit 0
     fi
@@ -64,17 +64,17 @@ fi
 
 # Run the Python script as parallel processes
 echo "Running FBSDE algorithm in parallel..."
-time python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde1.out 2>&1 & #) >> ../fbsde1.out 2>&1
+python classical_fbsde_adjoint.py -m opt -N 500 -e 1 $arg > ../fbsde1.out 2>&1 &
 pid1=$!
 echo "Started FBSDE process 1 with PID $pid1"
 # Run the Python script with different parameters
-time python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg > ../fbsde2.out 2>&1 & #) >> ../fbsde2.out 2>&1
+python classical_fbsde_adjoint.py -m opt -N 500 -e 2 $arg >> ../fbsde2.out 2>&1 &
 pid2=$!
 echo "Started FBSDE process 2 with PID $pid2"
-time python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg > ../fbsde3.out 2>&1 & #) >> ../fbsde3.out 2>&1
+python classical_fbsde_adjoint.py -m opt -N 500 -e 3 $arg >> ../fbsde3.out 2>&1 &
 pid3=$!
 echo "Started FBSDE process 3 with PID $pid3"
-time python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg > ../fbsde4.out 2>&1 & #) >> ../fbsde4.out 2>&1
+python classical_fbsde_adjoint.py -m opt -N 500 -e 4 $arg >> ../fbsde4.out 2>&1 &
 pid4=$!
 echo "Started FBSDE process 4 with PID $pid4"
 
@@ -92,13 +92,13 @@ echo "All FBSDE processes completed."
 
 # Plot the results
 echo "Plotting results..."
-(time python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde1.out 2>&1 &) >> ../fbsde1.out 2>&1 &
+python classical_fbsde_adjoint.py -m plot -e 1 >> ../fbsde1.out 2>&1 &
 pid1=$!
-(time python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde2.out 2>&1 &) >> ../fbsde2.out 2>&1 &
+python classical_fbsde_adjoint.py -m plot -e 2 >> ../fbsde2.out 2>&1 &
 pid2=$!
-(time python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde3.out 2>&1 &) >> ../fbsde3.out 2>&1 &
+python classical_fbsde_adjoint.py -m plot -e 3 >> ../fbsde3.out 2>&1 &
 pid3=$!
-(time python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde4.out 2>&1 &) >> ../fbsde4.out 2>&1 &
+python classical_fbsde_adjoint.py -m plot -e 4 >> ../fbsde4.out 2>&1 &
 pid4=$!
 
 echo "Waiting for plots to be complete..."

@@ -338,7 +338,7 @@ def precip_fbsde_solve(batch, par_vec, max_sim=500, exp_typ = 1, U=None, cost_=N
             Z_Ca_i      = dt_inv*torch.mean(dW2[:,i]*Y_Ca[-1],dim=0,keepdim=True).float()
             rhs_Y_Ca_i  =   (drhsCa_dCa_arr[:,i] * Y_Ca[-1]) #+ (drhsF_dCa_arr[:,i]  * Y_F[-1]).mean(dim=1) + (drhsC_dCa_arr[:,i]  * Y_C[-1])
                             
-            Y_Ca_i   = torch.clamp(Y_Ca[-1]   + dt*1*rhs_Y_Ca_i -  dt*1*ca_residual[:,i]  + dt*1*Z_Ca_i*sig_Ca   + .02*torch.sqrt(dt)*Z_Ca_i*dW2[:,i],min=-.01,max=.01)
+            Y_Ca_i   = torch.clamp(Y_Ca[-1]   + dt*1*rhs_Y_Ca_i -  dt*1*ca_residual[:,i]  + dt*1*Z_Ca_i*sig_Ca   - .02*torch.sqrt(dt)*Z_Ca_i*dW2[:,i],min=-.01,max=.01)
             Y_Ca.append(Y_Ca_i);
         
         Y_Ca = torch.stack(Y_Ca).permute(1,0).flip((1,));
@@ -346,7 +346,7 @@ def precip_fbsde_solve(batch, par_vec, max_sim=500, exp_typ = 1, U=None, cost_=N
 
         # Compute new control
         eta = .00005
-        U_opt = torch.clamp(U_opt - .1*eta*(U_opt - U_r[:,:len(dph)]) - 5*eta*(Y_Ca*1), min=-1,max=1)
+        U_opt = torch.clamp(U_opt - .1*eta*(U_opt - U_r[:,:len(dph)]) - 2*eta*(Y_Ca*1), min=-1,max=1)
         #print(U_opt,rhs_Y_Ca_i)
         loss = ca_loss.sum().item()
         cost.append(loss)
